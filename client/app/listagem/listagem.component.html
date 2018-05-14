@@ -33,7 +33,10 @@
             </a>
             
             <!-- Quando clicar no botão, seu evento click será disparado e executará a lógica de confirmação. Se confirmar, através do EventEmitter será disparado o evento acao. Isso fará com que a expressão remove(foto) atribuída ao evento acao seja executada em 'botato.component.ts' -->
-            <botao estilo="btn-danger btn-block" nome="Remover" confirmacao="true" (acao)="remove(foto, painel)"></botao>
+            <botao estilo="btn-danger btn-block" nome="Remover" [confirmacao]="false" (acao)="modal.show()"></botao>
+
+            <!-- A expressão 'remove(foto,painel)' será executada pois ao ser clicada irá disparar o evento 'confirma'  -->
+            <modal #modal frase="Tem certeza que deseja remover esta foto?" (confirma)="remove(foto, painel)"></modal>
 
 
             <!-- A variável 'foto' foi instanciada no *ngFor logo tem-se acesso a todos os atributos do objeto. Temos um event binding do método remove() -->

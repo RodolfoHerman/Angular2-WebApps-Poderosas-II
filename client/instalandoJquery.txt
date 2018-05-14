@@ -4,3 +4,29 @@ Executar o binario do typings passando como parâmetro as definições
 
 node ./node_modules/typings/dist/bin install dt~jquery --global --save
 
+necessário importar o jQuery na index.html
+
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+____________________________________________________
+
+jQueryUI
+
+npm install jqueryui-browser@1.10.2-1 --save
+
+O jquery-migrate é necessário, pois estamos usando a versão do jQuery 3.0. Sem ele, o jQueryUI apresentará vários problemas.
+
+npm install jquery-migrate@3.0.0 --save
+
+O jQueryUI que, além de importarmos seu script, precisamos importar seus arquivos css
+
+<link rel="stylesheet" href="node_modules/jqueryui-browser/themes/base/jquery-ui.css">
+
+<!-- tem que ser importado depois do jQuery -->
+<script src="node_modules/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script src="node_modules/jqueryui-browser/ui/jquery-ui.js"></script>
+
+
+e no terminal usar o comando:
+
+node ./node_modules/typings/dist/bin install dt~jqueryui --global --save
