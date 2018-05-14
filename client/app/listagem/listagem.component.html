@@ -2,6 +2,10 @@
     <h1 class="text-center">Projeto</h1>
 </div>
 <div class="container">
+
+    
+    <p *ngIf="mensagem.length" class="alert alert-info">{{ mensagem }}</p>
+
     <div class="row">
         <div class="col-md-12">
             <form>
@@ -21,8 +25,9 @@
 
     <div class="row">
         <painel *ngFor="let foto of fotos | filtroPorTitulo: textoProcurado.value" titulo="{{foto.titulo | uppercase}}"  class="col-md-2">
-            <foto titulo="{{foto.titulo}}" url="{{foto.url}}">
-            </foto>
+            <foto titulo="{{foto.titulo}}" url="{{foto.url}}"></foto>
+            <!-- A variável 'foto' foi instanciada no *ngFor logo tem-se acesso a todos os atributos do objeto. Temos um event binding do método remove() -->
+            <button class="btn btn-danger btn-block" (click)="remove(foto)">Reomover</button>
         </painel>
     </div><!-- fim row -->
 </div>
