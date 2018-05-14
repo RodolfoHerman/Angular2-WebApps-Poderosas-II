@@ -1,0 +1,8 @@
+.efeito {
+    transition: all 0.5s;
+}
+
+.efeito:hover {
+    transition: 0.5s;
+    transform: scale(1.115)
+}

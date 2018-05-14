@@ -1,0 +1,3 @@
+O encapsulamento de view padrão do Angular 2 é ViewEncapsulation.Emulated. O nome Emulated não foi dado por acaso. Ele tenta emular o Shadow DOM, garantindo assim que um elemento Host encapsule determinado CSS sem que ele vaze para o escopo global afetando outros elementos.
+
+O ViewEncapsulation.Native apesar de usar nativamente Shadow DOM não funciona em navegadores que não suportem essa tecnologia. Nada nos impede de queremos definir o CSS diretamente no componente, mas sem nenhum encapsulamento.
