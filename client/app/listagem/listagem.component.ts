@@ -21,7 +21,7 @@ export class ListagemComponent {
                 fotos => this.fotos = fotos, 
                 error => console.log(error));
         
-        //Comprexidade de acessar os dados do servidor foi para o foto.service
+        //Complexidade de acessar os dados do servidor foi para o foto.service
         // http.get('v1/fotos')
         //     .map(res => res.json())
         //     .subscribe(
