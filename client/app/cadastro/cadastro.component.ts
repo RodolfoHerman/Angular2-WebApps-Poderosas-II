@@ -3,6 +3,8 @@ import { FotoComponent } from '../foto/foto.component';
 import { Http, Headers } from '@angular/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FotoService } from '../foto/foto.service';
+//Necessário para identificar os parâmetros da rota 'ActivatedRoute'. Router necessário para redirecionar para a página que queremos. O Router realiza o procedimento de navegar para páginas do lado do 'component' ao contrário do 'routerLink' que é do lado do 'template'
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -13,8 +15,31 @@ export class CadastroComponent {
 
     foto: FotoComponent = new FotoComponent();
     meuForm: FormGroup;
+    mensagem: string = "";
 
-    constructor(fb: FormBuilder, private service: FotoService) {
+    constructor(fb: FormBuilder, 
+                private service: FotoService, 
+                private route: ActivatedRoute,
+                private router: Router) {
+        
+        this.route.params.subscribe(
+            params => {
+                //O acesso do array é definido pelo nome do parâmetro dado no arquivo 'app.routes.ts'
+                let id = params['id'];
+
+                if(id) {
+
+                    this.service
+                    .buscaPorId(id)
+                    .subscribe(
+                        foto => {
+                            this.foto = foto;
+                        },
+                        error => this.mensagem = error
+                    );
+                }
+            }
+        );
         
         this.meuForm = fb.group({
             titulo: ['', Validators.compose(
@@ -26,9 +51,10 @@ export class CadastroComponent {
     }
 
     cadastrar(event) {
+        
         event.preventDefault();
-        console.log(this.foto);
-
+        let atualizar = false;
+        
         // ---> A complexidade de enviar dados ao servidor foi para o foto.service.ts
         // cria uma instância de Headers
         //let headers = new Headers();
@@ -43,13 +69,21 @@ export class CadastroComponent {
         //         console.log(erro);
         //     });
 
+        if(this.foto._id) {
+
+            atualizar = true;
+        }
+
         this.service.cadastra(this.foto)
             .subscribe(() => {
-                console.log("Foto salva com sucesso !!");
+
+                this.mensagem = atualizar ? "Alteração realizada com sucesso !!" : "Foto salva com sucesso !!";
                 this.foto = new FotoComponent();
-            }, error => {
-                console.log(error);
-            });
+                //Alterar ou cadastrar um foto será redirecionado para a página principal (listagem)
+                this.router.navigate(['']);
+            }, 
+            error => this.mensagem = error
+        );
 
 
 
