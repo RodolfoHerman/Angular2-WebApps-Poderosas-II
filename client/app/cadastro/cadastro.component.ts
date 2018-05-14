@@ -75,12 +75,18 @@ export class CadastroComponent {
         }
 
         this.service.cadastra(this.foto)
-            .subscribe(() => {
+            .subscribe(res => {
 
-                this.mensagem = atualizar ? "Alteração realizada com sucesso !!" : "Foto salva com sucesso !!";
+                //this.mensagem = atualizar ? "Alteração realizada com sucesso !!" : "Foto salva com sucesso !!";
+                
+                this.mensagem = res.mensagem;
+
+                if(!res.inclusao) {
+                    //Alterar ou cadastrar um foto será redirecionado para a página principal (listagem)
+                    this.router.navigate(['']);
+                }
+                
                 this.foto = new FotoComponent();
-                //Alterar ou cadastrar um foto será redirecionado para a página principal (listagem)
-                this.router.navigate(['']);
             }, 
             error => this.mensagem = error
         );
