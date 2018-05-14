@@ -1,0 +1,6 @@
+npm install jquery@3.1.1 --save
+
+Executar o binario do typings passando como parâmetro as definições
+
+node ./node_modules/typings/dist/bin install dt~jquery --global --save
+
