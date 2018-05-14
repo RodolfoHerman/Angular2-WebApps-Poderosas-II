@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FotoComponent } from '../foto/foto.component';
 import { Http, Headers } from '@angular/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FotoService } from '../foto/foto.service';
 
 @Component({
     moduleId: module.id,
@@ -11,12 +12,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class CadastroComponent { 
 
     foto: FotoComponent = new FotoComponent();
-    http: Http;
     meuForm: FormGroup;
 
-    constructor(http: Http, fb: FormBuilder) {
-
-        this.http = http;
+    constructor(fb: FormBuilder, private service: FotoService) {
         
         this.meuForm = fb.group({
             titulo: ['', Validators.compose(
@@ -31,17 +29,30 @@ export class CadastroComponent {
         event.preventDefault();
         console.log(this.foto);
 
+        // ---> A complexidade de enviar dados ao servidor foi para o foto.service.ts
         // cria uma instância de Headers
-        let headers = new Headers();
+        //let headers = new Headers();
         // Adiciona o tipo de conteúdo application/json 
-        headers.append('Content-Type', 'application/json');
+        //headers.append('Content-Type', 'application/json');
 
-        this.http.post('v1/fotos', JSON.stringify(this.foto), { headers: headers })
+        // this.http.post('v1/fotos', JSON.stringify(this.foto), { headers: headers })
+        //     .subscribe(() => {
+        //         this.foto = new FotoComponent();
+        //         console.log('Foto salva com sucesso');
+        //     }, erro => {
+        //         console.log(erro);
+        //     });
+
+        this.service.cadastra(this.foto)
             .subscribe(() => {
+                console.log("Foto salva com sucesso !!");
                 this.foto = new FotoComponent();
-                console.log('Foto salva com sucesso');
-            }, erro => {
-                console.log(erro);
+            }, error => {
+                console.log(error);
             });
+
+
+
+
     }
 }
